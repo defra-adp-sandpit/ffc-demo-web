@@ -9,7 +9,7 @@
         },
         {
             "key": "Logging:LogLevel:Default",
-            "value": "Debug",
+            "value": "Test",
             "label": "snd1",
             "content_type": null,
             "tags": {}
