@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ffc-demo-web:
+    command: npm run start:watch
+    build:
+      target: development
+    image: ffc-demo-web-development
+    environment:
+      NODE_ENV: test
+      CLAIM_QUEUE_ADDRESS: ${CLAIM_QUEUE_ADDRESS:-ffc-demo-claim}
+    volumes:
+      - ./test-output:/home/node/test-output
+
+  axe:
+    image: defradigital/ffc-axe
+    depends_on:
+      - ffc-demo-web
+    command: sh -c "/scripts/wait ffc-demo-web:3000 -- axe --exclude ".govuk-skip-link,.govuk-breadcrumbs"  --chrome-options="no-sandbox,disable-setuid-sandbox,disable-dev-shm-usage" --chromedriver-path=/usr/bin/chromedriver --exit ffc-demo-web:3000, ffc-demo-web:3000/claim/name, ffc-demo-web:3000/claim/property, ffc-demo-web:3000/claim/accessible, ffc-demo-web:3000/claim/mine-type, ffc-demo-web:3000/claim/date-of-subsidence, ffc-demo-web:3000/claim/email, ffc-demo-web:3000/claim/confirmation"
+    volumes:
+      - ./test-output:/test-output
+      - ./scripts:/scripts

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+cd "${projectRoot}"
+# Guarantee clean environment
+docker-compose -f docker-compose.yaml -f docker-compose.axe.yaml -p ffc-demo-web-axe-test down -v
+# Run AXE test
+docker-compose -f docker-compose.yaml -f docker-compose.axe.yaml run --rm axe

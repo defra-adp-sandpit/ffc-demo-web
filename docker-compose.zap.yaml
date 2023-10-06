@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ffc-demo-web:
+    command: npm run start:watch
+    build:
+      target: development
+    image: ffc-demo-web-development
+    environment:
+      NODE_ENV: test
+      CLAIM_QUEUE_ADDRESS: ${CLAIM_QUEUE_ADDRESS:-ffc-demo-claim}
+    volumes:
+      - ./test-output:/home/node/test-output
+
+  zap-baseline-scan:
+    image: owasp/zap2docker-stable:2.9.0
+    command: zap-baseline.py -t http://ffc-demo-web:${PORT:-3000} -c config/zap.conf -r test-output/zap-report.html -a -d -I
+    depends_on:
+      - ffc-demo-web
+    volumes:
+      - ./test-output:/zap/wrk/test-output
+      - ./zap:/zap/wrk/config

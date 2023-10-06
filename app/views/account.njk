@@ -1,0 +1,31 @@
+{% extends "_layout.njk" %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      }]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">FFC Demo Service</h1>
+      <h2 class="govuk-heading">Account details</h1>
+      <p class="govuk-body">Username:  {{ username }}</p>
+      <p class="govuk-body">Firstname: {{ firstName }}</p>
+      <p class="govuk-body">Lastname:  {{ lastName }}</p>
+
+      {{ govukWarningText({
+        text: "This is not a real service and is for demonstration and investigation purposes only.",
+        iconFallbackText: "Warning"
+      }) }}
+  </div>
+{% endblock %}

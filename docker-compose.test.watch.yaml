@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  ffc-demo-web:
+    command: >
+      sh -c "npm run test:watch"
+    volumes:
+      - ./app:/home/node/app
+      - ./.git:/home/node/.git

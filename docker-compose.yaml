@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  ffc-demo-web:
+    build:
+      context: .
+      target: production
+    image: ffc-demo-web
+    container_name: ffc-demo-web
+    environment:
+      APPINSIGHTS_CLOUDROLE: ffc-demo-web-local
+      APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
+      CLAIM_QUEUE_ADDRESS: ${CLAIM_QUEUE_ADDRESS:-ffc-demo-claim}${MESSAGE_QUEUE_SUFFIX}
+      COOKIE_PASSWORD: cookiecookiecookiecookiecookiecookie      
+      MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
+      MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
+      MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
+      PROTECTIVE_MONITORING_URL: ${PROTECTIVE_MONITORING_URL}
+      REDIS_HOSTNAME: redis
+      GOOGLE_TAG_MANAGER_KEY: GTM-N5QK7RL

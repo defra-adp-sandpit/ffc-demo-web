@@ -1,0 +1,20 @@
+{{- include "ffc-helm-library.container-config-map" (list . "ffc-demo-web.config-map") -}}
+{{- define "ffc-demo-web.config-map" -}}
+data:
+  NODE_ENV: {{ quote .Values.environment }}
+  PORT: {{ quote .Values.container.port }}
+{{- if .Values.container.protectiveMonitoringUrl }}
+  PROTECTIVE_MONITORING_URL: {{ quote .Values.container.protectiveMonitoringUrl }}
+{{- end }}
+{{- if .Values.container.redisHostname }}
+  REDIS_HOSTNAME: {{ quote .Values.container.redisHostname }}
+{{- end }}
+  REDIS_PORT: {{ quote .Values.container.redisPort }}
+  REDIS_PARTITION: {{ quote .Values.container.redisPartition }}
+  REST_CLIENT_TIMEOUT_IN_MILLIS: {{ quote .Values.container.restClientTimeoutMillis }}
+  STATIC_CACHE_TIMEOUT_IN_MILLIS: {{ quote .Values.container.staticCacheTimeoutMillis }}
+  MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
+  CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
+  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
+  GOOGLE_TAG_MANAGER_KEY: {{ quote .Values.container.googleTagManagerKey}}
+{{- end -}}

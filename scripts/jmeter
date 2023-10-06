@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+cd "${projectRoot}"
+
+# Guarantee clean environment
+docker-compose down
+
+docker-compose up -d
+
+cd "${projectRoot}/test/performance"
+
+# Run jmeter test
+docker-compose -f ../../docker-compose.yaml -f docker-compose.jmeter.yaml run jmeter-test
+
+cd "${projectRoot}"
+
+docker-compose down
